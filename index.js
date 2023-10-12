@@ -124,69 +124,72 @@ app.get('/', (req, res) => {
 
 
 //   Github Authentication
-app.get("/auth/github", async (req, res) => {
-  const { code } = req.query;
-  const accessToken = await fetch(
-    "https://github.com/login/oauth/access_token",
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        client_id: process.env.GITHUB_CLILENT_ID,
-        client_secret: process.env.GITHUB_CLILENT_SECRET,
-        code,
-      }),
-    }
-  ).then((response) => {
-    return response.json();
-  });
-  const user = await fetch("https://api.github.com/user", {
-    headers: {
-      Authorization: `Bearer ${accessToken.access_token}`,
-    },
-  })
-    .then((res) => res.json())
-    .catch((err) => console.log(err));
-  console.log(user);
-  const useremail = await fetch("https://api.github.com/user/emails", {
-    headers: {
-      Authorization: `Bearer ${accessToken.access_token}`,
-    },
-  })
-    .then((res) => res.json())
-    .catch((err) => console.log(err));
-  console.log(useremail);
-  // console.log(useremail[0].email)
-  const isUserPresent = await UserModel.findOne({ email: useremail[0].email });
-  // console.log(isUserPresent)
-  if (!isUserPresent) {
-    let password = "12345";
-    const hashPass = await bcrypt.hash(password, 4);
-    const users = {
-      name: user.name,
-      email: useremail[0].email,
-      password: hashPass,
-    };
-    const newUser = new UserModel(users);
-    await newUser.save();
-    res.redirect(
-      "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/project_timer_pages/project.html"
-    );
-  } else {
-    res.redirect(
-      "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/project_timer_pages/project.html"
-    );
-  }
-  // res.redirect("http://127.0.0.1:5501/Frontend/project_timer_pages/project.html")
-});
-app.get("/login", (req, res) => {
-  res.redirect(
-    "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/login_signup_pages/register.html"
-  );
-});
+// app.get("/auth/github", async (req, res) => {
+//   const { code } = req.query;
+//   const accessToken = await fetch(
+//     "https://github.com/login/oauth/access_token",
+//     {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         client_id: process.env.GITHUB_CLILENT_ID,
+//         client_secret: process.env.GITHUB_CLILENT_SECRET,
+//         code,
+//       }),
+//     }
+//   ).then((response) => {
+//     return response.json();
+//   });
+//   const user = await fetch("https://api.github.com/user", {
+//     headers: {
+//       Authorization: `Bearer ${accessToken.access_token}`,
+//     },
+//   })
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err));
+//   console.log(user);
+//   const useremail = await fetch("https://api.github.com/user/emails", {
+//     headers: {
+//       Authorization: `Bearer ${accessToken.access_token}`,
+//     },
+//   })
+//     .then((res) => res.json())
+//     .catch((err) => console.log(err));
+//   console.log(useremail);
+//   // console.log(useremail[0].email)
+//   const isUserPresent = await UserModel.findOne({ email: useremail[0].email });
+//   // console.log(isUserPresent)
+//   if (!isUserPresent) {
+//     let password = "12345";
+//     const hashPass = await bcrypt.hash(password, 4);
+//     const users = {
+//       name: user.name,
+//       email: useremail[0].email,
+//       password: hashPass,
+//     };
+//     const newUser = new UserModel(users);
+//     await newUser.save();
+//     res.redirect(
+//       "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/project_timer_pages/project.html"
+//     );
+//   } else {
+//     res.redirect(
+//       "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/project_timer_pages/project.html"
+//     );
+//   }
+//   // res.redirect("http://127.0.0.1:5501/Frontend/project_timer_pages/project.html")
+// });
+// app.get("/login", (req, res) => {
+//   res.redirect(
+//     "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/login_signup_pages/register.html"
+//   );
+// });
+
+
+
 // const useremail = await fetch("https://api.github.com/user/emails", {
 //   headers: {
 //     Authorization: `Bearer ${accessToken.access_token}`,

@@ -204,7 +204,7 @@ app.get('/', (req, res) => {
 // });
 app.get("/login", (req, res) => {
   res.redirect(
-    "https://6527b486a4fc76189674d321--precious-cocada-01b8f9.netlify.app/login_signup_pages/register.html"
+    "https://effulgent-pavlova-b89c84.netlify.app/login_signup_pages/register.html"
   );
 });
 app.get("/auth/protected", isLoggedIn, (req, res) => {

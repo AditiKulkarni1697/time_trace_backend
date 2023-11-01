@@ -25,7 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.get("/", (req, res) => {
-  res.send("B26_Time-Trace_Project");
+  res.send("B26_Time-Trace_Project Backend");
+  
 });
 app.use("/user", userRoute);
 app.use("/timer", timerRoute);
@@ -54,7 +55,7 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/');
+    res.redirect('https://effulgent-pavlova-b89c84.netlify.app/project_timer_pages/project.html');
   }
 );
 

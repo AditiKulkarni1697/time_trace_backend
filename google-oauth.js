@@ -10,7 +10,7 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:
-        "https://time-trace-backend.onrender.com/auth/google/callback",
+        "https://time-trace-backend3.onrender.com/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       // let email = profile._json.email
